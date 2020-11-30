@@ -1,20 +1,29 @@
 <?xml version="1.0"?>
-<!-- Package metadata for the ezrassor_topic_switch ROS package.
-     Written by Tiger Sachse. -->
+<?xml-model href="http://download.ros.org/schema/package_format2.xsd"
+            schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--
+  This file specifies metadata for the ezrassor_topic_switch ROS package.
+
+  This file and setup.py are required in ROS 2. Some metadata listed below are
+  duplicated in setup.py. This metadata must be identical in both files.
+
+  references:
+    index.ros.org/doc/ros2/Tutorials/Creating-Your-First-ROS2-Package
+-->
 <package format="2">
   <name>ezrassor_topic_switch</name>
+  <version>2.0.0</version>
+  <description>Route topic messages on the EZRASSOR.</description>
+  <url type="website">https://github.com/FlaSpaceInst/ezrassor_topic_switch</url>
+  <maintainer email="ez.rassor@gmail.com">EZRASSOR Team</maintainer>
+  <author email="ez.rassor@gmail.com">EZRASSOR Team</author>
   <license>MIT</license>
-  <version>1.1.1</version>
-  <author email="tgsachse@gmail.com">Tiger Sachse</author>
-  <maintainer email="tgsachse@gmail.com">Tiger Sachse</maintainer>
-  <url type="website">https://github.com/FlaSpaceInst/EZ-RASSOR</url>
-  <description>Route topic data on the EZ-RASSOR.</description>
 
-  <!-- A list of package dependencies. -->
-  <depend>rospy</depend>
+  <depend>rclpy</depend>
   <depend>std_msgs</depend>
-  <depend>roslaunch</depend>
   <depend>geometry_msgs</depend>
-  <build_depend>rostest</build_depend>
-  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
 </package>

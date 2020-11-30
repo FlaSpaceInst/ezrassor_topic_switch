@@ -1,0 +1,5 @@
+# This file is used by ament's resource index to indicate that a ROS package
+# with the name "ezrassor_topic_switch" is installed.
+#
+# references:
+#   github.com/ament/ament_cmake/blob/master/ament_cmake_core/doc/resource_index.md
