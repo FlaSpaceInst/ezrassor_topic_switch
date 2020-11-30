@@ -1,37 +1,27 @@
-"""Process items based on the override status."""
+"""Process data with a channeled multiplexer.
+
+references:
+  en.wikipedia.org/wiki/Multiplexer
+"""
 import threading
 
 
-def conditionally_process(func, override_status, expected_status):
-    """Create a function that processes items based on the override status."""
+class Multiplexer:
+    """Process and output data from a selected input channel."""
 
-    def _conditionally_process(item):
-        """Process an item if the override status equals an expected status."""
-        if override_status == expected_status:
-            return func(item)
-
-    return _conditionally_process
-
-
-class OverrideStatus:
-    """Maintain a thread-safe override status.
-
-    This class wraps a raw boolean and allows us to pass this boolean around
-    using pass-by-reference. Asynchronous updates to the boolean are available
-    to all objects and functions that hold a reference.
-    """
-
-    def __init__(self):
-        """Initialize an override status with a thread lock."""
-        self._status = False
+    def __init__(self, process_output):
+        """Initialize this multiplexer."""
+        self._process_output = process_output
+        self._current_channel = 0
         self._lock = threading.Lock()
 
-    def __eq__(self, other_boolean):
-        """Compare the override status with a boolean."""
+    def change_channel(self, new_channel):
+        """Change the current multiplexer channel."""
         with self._lock:
-            return self._status == other_boolean
+            self._current_channel = new_channel
 
-    def update(self, new_status):
-        """Update the override status."""
+    def offer_input(self, channel, data):
+        """Process and output data if the given channel is currently active."""
         with self._lock:
-            self._status = new_status
+            if channel == self._current_channel:
+                return self._process_output(data)

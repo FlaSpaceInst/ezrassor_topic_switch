@@ -3,33 +3,79 @@ import ezrassor_topic_switch as switch
 import std_msgs.msg
 
 
-def test_load_message_type_without_type_name():
-    """Should fail to load type if type name is None."""
+def test_load_channels_with_none():
+    """Should fail to load channels if channels is None."""
+    try:
+        switch.load_channels(None)
+        assert False, "load_channels() should have failed"
+    except Exception as error:
+        assert isinstance(error, switch.LoadError)
+        assert "channels argument is not set" in error.message
+
+
+def test_load_channels_with_alphabetic_characters():
+    """Should fail to load channels if alphabetic characters are present."""
+    try:
+        switch.load_channels("abc")
+        assert False, "load_channels() should have failed"
+    except Exception as error:
+        assert isinstance(error, switch.LoadError)
+        assert "channels argument must be a number" in error.message
+
+
+def test_load_channels_with_negative_number():
+    """Should fail to load channels if number is negative."""
+    try:
+        switch.load_channels("-1")
+        assert False, "load_channels() should have failed"
+    except Exception as error:
+        assert isinstance(error, switch.LoadError)
+        assert "must have more than 1 channel" in error.message
+
+
+def test_load_channels_with_number_above_upper_bound():
+    """Should fail to load channels if number is above the upper bound."""
+    try:
+        switch.load_channels("200", upper_bound=99)
+        assert False, "load_channels() should have failed"
+    except Exception as error:
+        assert isinstance(error, switch.LoadError)
+        assert "must have fewer than 100 channels" in error.message
+
+
+def test_load_channels_with_valid_number():
+    """Should load channels properly."""
+    channels = switch.load_channels("4")
+    assert channels == 4
+
+
+def test_load_message_type_with_none():
+    """Should fail to load type if message type is None."""
     try:
         switch.load_message_type(None)
         assert False, "load_message_type() should have failed"
     except Exception as error:
-        assert isinstance(error, switch.MessageLoadError)
+        assert isinstance(error, switch.LoadError)
         assert "message type is not set" in error.message
 
 
-def test_load_message_type_with_nonstring_type_name():
-    """Should fail to load type if type name is not a string."""
+def test_load_message_type_with_nonstring_message_type():
+    """Should fail to load type if message type is not a string."""
     try:
         switch.load_message_type(1)
         assert False, "load_message_type() should have failed"
     except Exception as error:
-        assert isinstance(error, switch.MessageLoadError)
+        assert isinstance(error, switch.LoadError)
         assert "message type must be a string" in error.message
 
 
-def test_load_message_type_from_malformed_type_name():
-    """Should fail to load type if type name is misspelled/malformed."""
+def test_load_message_type_from_malformed_message_type():
+    """Should fail to load type if message type is misspelled/malformed."""
     try:
         switch.load_message_type("malformed")
         assert False, "load_message_type() should have failed"
     except Exception as error:
-        assert isinstance(error, switch.MessageLoadError)
+        assert isinstance(error, switch.LoadError)
         assert "must include periods" in error.message
 
 
@@ -39,7 +85,7 @@ def test_load_message_type_from_nonexistent_module():
         switch.load_message_type("nonstd_msgs.msg.String")
         assert False, "load_message_type() should have failed"
     except Exception as error:
-        assert isinstance(error, switch.MessageLoadError)
+        assert isinstance(error, switch.LoadError)
         assert "no module named 'nonstd_msgs.msg'" in error.message
 
 
@@ -49,11 +95,11 @@ def test_load_message_type_with_nonexistent_message_type():
         switch.load_message_type("std_msgs.msg.UltraString")
         assert False, "load_message_type() should have failed"
     except Exception as error:
-        assert isinstance(error, switch.MessageLoadError)
+        assert isinstance(error, switch.LoadError)
         assert "no message named 'UltraString'" in error.message
 
 
-def test_load_message_type_with_type_name():
-    """Should load type and return it when given a valid type name."""
+def test_load_message_type_from_valid_message_type():
+    """Should load type and return it when given a valid message type."""
     message_type = switch.load_message_type("std_msgs.msg.String")
     assert message_type is std_msgs.msg.String
