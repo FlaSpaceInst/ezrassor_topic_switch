@@ -7,7 +7,6 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     """Create a topic switch node with a launch description."""
-
     message_type_argument = DeclareLaunchArgument(
         "message_type",
         default_value="std_msgs.msg.String",

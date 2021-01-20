@@ -19,9 +19,12 @@
   <author email="ez.rassor@gmail.com">EZRASSOR Team</author>
   <license>MIT</license>
 
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
   <depend>rclpy</depend>
   <depend>std_msgs</depend>
-  <depend>geometry_msgs</depend>
+
+  <exec_depend>launch_testing</exec_depend>
 
   <export>
     <build_type>ament_python</build_type>
