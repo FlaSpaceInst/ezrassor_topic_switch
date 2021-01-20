@@ -1,6 +1,6 @@
 """Test the loading machinery in this module."""
 import ezrassor_topic_switch as switch
-import std_msgs.msg
+import numbers
 
 
 def test_load_channels_with_none():
@@ -82,24 +82,24 @@ def test_load_message_type_from_malformed_message_type():
 def test_load_message_type_from_nonexistent_module():
     """Should fail to load type if the Python module doesn't exist."""
     try:
-        switch.load_message_type("nonstd_msgs.msg.String")
+        switch.load_message_type("nonexistent.module.Class")
         assert False, "load_message_type() should have failed"
     except Exception as error:
         assert isinstance(error, switch.LoadError)
-        assert "no module named 'nonstd_msgs.msg'" in error.message
+        assert "no module named 'nonexistent.module'" in error.message
 
 
 def test_load_message_type_with_nonexistent_message_type():
     """Should fail to load type if the Python class doesn't exist."""
     try:
-        switch.load_message_type("std_msgs.msg.UltraString")
+        switch.load_message_type("numbers.NonexistentClass")
         assert False, "load_message_type() should have failed"
     except Exception as error:
         assert isinstance(error, switch.LoadError)
-        assert "no message named 'UltraString'" in error.message
+        assert "no message named 'NonexistentClass'" in error.message
 
 
 def test_load_message_type_from_valid_message_type():
     """Should load type and return it when given a valid message type."""
-    message_type = switch.load_message_type("std_msgs.msg.String")
-    assert message_type is std_msgs.msg.String
+    message_type = switch.load_message_type("numbers.Complex")
+    assert message_type is numbers.Complex
