@@ -1,3 +1,6 @@
-# This file contains configuration settings for Black, a Python linter.
+# This file contains configuration settings for build and testing tools.
 [tool.black]
 line-length = 80
+
+[tool.pytest.ini_options]
+testpaths = ["test/unit"]

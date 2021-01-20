@@ -56,7 +56,10 @@ jobs:
         path: log/latest_build
 
     - name: Run unit tests
-      run: . /opt/ros/dashing/setup.bash && colcon test && colcon test-result --verbose
+      run: |
+        . /opt/ros/dashing/setup.bash
+        colcon test
+        colcon test-result --verbose
 
     - name: Upload unit test logs
       uses: actions/upload-artifact@v1
@@ -65,3 +68,18 @@ jobs:
       with:
         name: unit-test-logs
         path: log/latest_test
+
+    - name: Run integration tests
+      run: |
+        . /opt/ros/dashing/setup.bash
+        . install/setup.bash
+        launch_test src/test/integ/ezrassor_topic_switch/test_topic_switch.py \
+          --verbose >> log/latest_integ
+
+    - name: Upload integration test log
+      uses: actions/upload-artifact@v1
+      # Always upload log even if other steps fail.
+      if: always()
+      with:
+        name: integration-test-log
+        path: log/latest_integ
