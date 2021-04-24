@@ -35,10 +35,8 @@ setuptools.setup(
             "share/ament_index/resource_index/packages",
             ["resources/ezrassor_topic_switch"],
         ),
-        (
-            "share/ezrassor_topic_switch",
-            ["package.xml"] + glob.glob("launch/*"),
-        ),
+        ("share/ezrassor_topic_switch", ["package.xml"]),
+        ("share/ezrassor_topic_switch/launch", glob.glob("launch/*")),
     ],
     tests_require=["pytest"],
     entry_points={
