@@ -12,6 +12,7 @@ references:
 import ament_index_python.packages as ament
 import launch
 import launch.launch_description_sources as description_sources
+import launch_testing
 import rclpy
 import std_msgs.msg
 import time
@@ -30,15 +31,12 @@ CATCHUP_TIME = 1
 TIMEOUT = 0.5
 
 
-def generate_test_description(ready_fn):
+def generate_test_description():
     """Create a test description with the topic_switch launch file.
 
     This function is required by the launch_testing framework. It generates a
     new launch description that includes all of the nodes and additional launch
-    files required for the tests. It also includes an "OpaqueFunction" that
-    indicates to the framework that the tests should be launched immediately.
-
-    This OpaqueFunction will be removed in ROS Foxy.
+    files required for the tests.
     """
     topic_switch_launch_file = TOPIC_SWITCH_LAUNCH_FILE_FORMAT.format(
         ament.get_package_share_directory(PACKAGE),
@@ -55,7 +53,7 @@ def generate_test_description(ready_fn):
                     "channels": TEST_CHANNELS,
                 }.items(),
             ),
-            launch.actions.OpaqueFunction(function=lambda context: ready_fn()),
+            launch_testing.actions.ReadyToTest(),
         ]
     )
 

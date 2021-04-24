@@ -20,7 +20,7 @@ def generate_launch_description():
 
     topic_switch_node = Node(
         package="ezrassor_topic_switch",
-        node_executable="topic_switch",
+        executable="topic_switch",
         parameters=[
             {
                 "message_type": LaunchConfiguration("message_type"),

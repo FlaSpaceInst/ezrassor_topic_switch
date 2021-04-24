@@ -27,12 +27,12 @@ jobs:
         run: python -m flake8 .
 
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
     - name: Setup ROS 2
       uses: ros-tooling/setup-ros@0.1.4
       with:
-        required-ros-distributions: dashing
+        required-ros-distributions: foxy
 
     - name: Update rosdep
       run: rosdep update
@@ -43,7 +43,7 @@ jobs:
         path: src
 
     - name: Install dependencies
-      run: rosdep install --from-paths src --ignore-src -r -y --rosdistro=dashing
+      run: rosdep install --from-paths src --ignore-src -r -y --rosdistro=foxy
 
     - name: Install repository
       run: colcon build
@@ -57,7 +57,7 @@ jobs:
 
     - name: Run unit tests
       run: |
-        . /opt/ros/dashing/setup.bash
+        . /opt/ros/foxy/setup.bash
         colcon test
         colcon test-result --verbose
 
@@ -71,7 +71,7 @@ jobs:
 
     - name: Run integration tests
       run: |
-        . /opt/ros/dashing/setup.bash
+        . /opt/ros/foxy/setup.bash
         . install/setup.bash
         launch_test src/test/integ/ezrassor_topic_switch/test_topic_switch.py \
           --verbose >> log/latest_integ
