@@ -27,8 +27,8 @@ command:
   ros2 launch ezrassor_topic_switch topic_switch.py [argument:=value]
 
 optional arguments:
-  message_type   topic message type
-  channels       number of desired channels
+  message_type   topic message type (default: std_msgs.msg.String)
+  channels       number of desired channels (default: 2)
 ```
 
 examples
