@@ -19,7 +19,7 @@ import unittest
 
 NODE = "test_topic_switch"
 PACKAGE = "ezrassor_topic_switch"
-TOPIC_SWITCH_LAUNCH_FILE_FORMAT = "{0}/topic_switch.py"
+TOPIC_SWITCH_LAUNCH_FILE_FORMAT = "{0}/launch/topic_switch.py"
 TEST_MESSAGE_TYPE = "std_msgs.msg.String"
 TEST_CHANNELS = "2"
 INPUT_TOPIC_FORMAT = "input{0}"
